@@ -20,15 +20,26 @@
 #include <algorithm>
 #include <cstdlib>
 
-#include <glibmm.h>
+#include <glib.h>
 
 #include "request.hpp"
 #include "server.hpp"
 
+namespace cvc4_http {
+    struct gmain_copy_ops {
+         static void ref(GMainLoop* loop) {
+             g_main_loop_ref(loop);
+         }
+         static void unref(GMainLoop* loop) {
+             g_main_loop_unref(loop);
+         }
+    };
+}
+
 int main() {
     cvc4_http::Server server;
 
-    auto loop = Glib::MainLoop::create();
-    loop->run();
+    cvc4_http::gref_ptr<GMainLoop, cvc4_http::gmain_copy_ops> loop(g_main_loop_new (nullptr, false));
+    g_main_loop_run(loop.get());
     return 0;
 }

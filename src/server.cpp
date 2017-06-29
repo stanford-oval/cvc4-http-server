@@ -22,8 +22,6 @@
 #include <iostream>
 #include <functional>
 
-#include <glibmm.h>
-
 #include "server.hpp"
 #include "gexcept.hpp"
 #include "solver.hpp"

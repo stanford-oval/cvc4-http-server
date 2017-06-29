@@ -9,7 +9,6 @@ executable('cvc4-http-server',
     cpp.find_library('cvc4'),
     cpp.find_library('cvc4parser'),
     dependency('libsoup-2.4'),
-    dependency('glibmm-2.4'),
     dependency('threads')
   ]
 )
