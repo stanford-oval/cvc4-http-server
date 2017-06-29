@@ -1,6 +1,7 @@
 project('cvc4-http-server', 'cpp',
   version: '0.0.1',
   meson_version: '>= 0.36.0',
+  license: ['GPLv2+']
 )
 
 intl = import('i18n')

@@ -17,18 +17,27 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <algorithm>
-#include <cstdlib>
+#pragma once
+#include <libsoup/soup.h>
 
-#include <glibmm.h>
-
+#include "refptr.hpp"
 #include "request.hpp"
-#include "server.hpp"
+#include "threadpool.hpp"
+#include "soup_stream.hpp"
+#include "solver.hpp"
 
-int main() {
-    cvc4_http::Server server;
+namespace cvc4_http {
 
-    auto loop = Glib::MainLoop::create();
-    loop->run();
-    return 0;
+class Server {
+private:
+    gref_ptr<SoupServer> server;
+    threadpool<Solver> thread_pool;
+
+    void handle_solve(Request&& req);
+    void do_handle_solve(Solver &solver, const Request& req, soup_message_stream& ostreambuf);
+
+public:
+    Server();
+};
+
 }

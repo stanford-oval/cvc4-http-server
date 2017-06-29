@@ -17,18 +17,33 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <algorithm>
-#include <cstdlib>
+#pragma once
+#include <memory>
 
-#include <glibmm.h>
+#include <libsoup/soup.h>
 
-#include "request.hpp"
-#include "server.hpp"
+#include "refptr.hpp"
 
-int main() {
-    cvc4_http::Server server;
+namespace cvc4_http {
 
-    auto loop = Glib::MainLoop::create();
-    loop->run();
-    return 0;
+class Request {
+private:
+    gref_ptr<SoupMessage> message;
+    gboxed_ptr<SoupClientContext, soup_client_context_get_type> client_context;
+
+public:
+    Request(SoupMessage* msg, SoupClientContext *client_context) :
+        message(make_gref_ptr(msg, false)),
+        client_context(client_context, false)
+        {}
+
+    gref_ptr<SoupMessage> get_message() const {
+        return message;
+    }
+
+    const gboxed_ptr<SoupClientContext, soup_client_context_get_type>& get_context() const {
+        return client_context;
+    }
+};
+
 }

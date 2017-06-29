@@ -17,18 +17,27 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <algorithm>
-#include <cstdlib>
+#pragma once
+#include <iostream>
+#include <mutex>
 
-#include <glibmm.h>
+#include <cvc4/cvc4.h>
 
-#include "request.hpp"
-#include "server.hpp"
+namespace cvc4_http {
 
-int main() {
-    cvc4_http::Server server;
+class Solver {
+private:
+    static std::mutex option_lock;
 
-    auto loop = Glib::MainLoop::create();
-    loop->run();
-    return 0;
+    CVC4::ExprManager expr_manager;
+    CVC4::Options& options;
+
+    void maybe_dump_models(CVC4::SmtEngine&, const std::unique_ptr<CVC4::Command>& command, std::ostream &);
+
+public:
+    Solver();
+
+    void process(std::istream&, std::ostream&);
+};
+
 }
