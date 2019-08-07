@@ -30,8 +30,8 @@ else
     # sleep until the process is settled
     sleep 30
 
-    curl -H'Content-Type: application/octet-stream' -d@$srcdir/data/test1.smt 'http://127.0.0.1:8400/solve' -o answer1.txt
-    diff -u answer1.txt <<<"unsat"
+    curl -H'Content-Type: application/octet-stream' -d@$srcdir/test/data/test1.smt 'http://127.0.0.1:8400/solve' -o answer1.txt
+    diff -u answer1.txt <(echo "unsat")
 fi
 
 kill $serverpid
