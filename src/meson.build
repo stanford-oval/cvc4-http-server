@@ -10,5 +10,6 @@ executable('cvc4-http-server',
     cpp.find_library('cvc4parser'),
     dependency('libsoup-2.4'),
     dependency('threads')
-  ]
+  ],
+  install: true
 )
