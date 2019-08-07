@@ -1,0 +1,16 @@
+dist: bionic
+branches:
+  except:
+  - "/^wip/"
+sudo: true
+language: c
+before_install:
+- sudo apt-get update -q -y
+- sudo apt-get install -y cvc4 libcvc4-dev libsoup2.4-dev libcln-dev
+script:
+- meson build --prefix=/usr/local
+- ninja -C build
+- sudo ninja -C build install
+- ./test/integration.sh
+after_success:
+- yarn coverage
