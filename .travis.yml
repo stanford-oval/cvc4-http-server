@@ -6,7 +6,7 @@ sudo: true
 language: c
 before_install:
 - sudo apt-get update -q -y
-- sudo apt-get install -y cvc4 libcvc4-dev libsoup2.4-dev libcln-dev
+- sudo apt-get install -y cvc4 libcvc4-dev libsoup2.4-dev libcln-dev meson ninja-build
 script:
 - meson build --prefix=/usr/local
 - ninja -C build
