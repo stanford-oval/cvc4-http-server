@@ -18,7 +18,7 @@ on_error() {
 }
 trap on_error ERR INT TERM
 
-node $bindir/cvc4-http-server &
+$bindir/cvc4-http-server &
 serverpid=$!
 
 # in interactive mode, sleep forever
